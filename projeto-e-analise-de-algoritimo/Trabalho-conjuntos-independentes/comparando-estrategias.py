@@ -95,7 +95,7 @@ def main():
     
     strategy_data = pd.DataFrame({"normal": [], "further": []})
     print(strategy_data)
-    for numCells in range(150):
+    for numCells in range(200):
         board = makeGraphBoard(numCells)
 
         queensOnBoardNormal = []
@@ -109,7 +109,7 @@ def main():
         
         strategy_data.loc[numCells] = [numQueensNormal, numQueensFuther]
     print(strategy_data)
-    file_name = 'comparacao.xlsx'
+    file_name = 'comparacao200.xlsx'
     strategy_data.to_excel(file_name) 
 
 

@@ -66,6 +66,9 @@ candidatesSets = []
 queensOnBoard = []
 accept = True
 
+import time
+start = time.time()
+
 for i in range(1, numCells + 1):
     candidatesSets += itertools.combinations(board.nodes(), i)
 
@@ -103,6 +106,8 @@ for i in independentSets:
         maximalSets.append(i)
         
 print('Maximal sets: ', maximalSets)
+end = time.time()
+
 
 for sets in maximalSets:
     clean_board(chessBoard)
@@ -112,4 +117,4 @@ for sets in maximalSets:
     print('Queens: ', sets)
 
 print(len(maximalSets))
-    
+print("Time: ", end - start)

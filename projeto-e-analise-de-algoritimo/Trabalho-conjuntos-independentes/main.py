@@ -1,6 +1,6 @@
 import networkx as nx
 
-numCells = 50
+numCells = 150
 
 # create a matrix of the board nxn
 def create_board(numCells):
@@ -69,7 +69,7 @@ def normalStrategy(board, queensOnBoard):
         newQueen = True
     return queensOnBoard
 
-def furtherStrategy(board, queensOnBoard):
+def distanceStrategy(board, queensOnBoard):
     newQueen = True
     isBelow = True
     for i in range(numCells):
@@ -97,15 +97,51 @@ def furtherStrategy(board, queensOnBoard):
                 newQueen = True
     return queensOnBoard                
 
+def distanceStrategy2(board, queensOnBoard):
+    newQueen = True
+    isBelow = 0
+    for i in range(numCells):
+        if isBelow > 0:
+            for j in range(numCells):
+                for queen in queensOnBoard:
+                    if board.has_edge(queen, (i, j)):
+                        newQueen = False
+                        break
+                if newQueen:
+                    queensOnBoard += [(i, j)]
+                    isBelow -= 1
+                    break
+                newQueen = True
+        else:
+            for j in range(numCells - 1, -1, -1):
+                for queen in queensOnBoard:
+                    if board.has_edge(queen, (i, j)):
+                        newQueen = False
+                        break
+                if newQueen:
+                    queensOnBoard += [(i, j)]
+                    isBelow += 1
+                    break
+                newQueen = True
+    return queensOnBoard
+
 #queensOnBoard = normalStrategy(board, queensOnBoard)
-queensOnBoard = furtherStrategy(board, queensOnBoard)
+# verifica quanto tempo demora para executar a estratégia da distância
+import time
+start = time.time()
+queensOnBoard = distanceStrategy(board, queensOnBoard)
+end = time.time()
+print("Time: ", end - start)
+#queensOnBoard = distanceStrategy2(board, queensOnBoard)
+
 
 for i, j in queensOnBoard:
     chessBoard[i][j] = 'Q'        
 
-print('Queens: ')
-print(queensOnBoard)
-print('Expect number of queens: ', numCells)
-print('Number of queens: ', len(queensOnBoard))
+#print('Queens: ')
+#print(queensOnBoard)
+#print('Expect number of queens: ', numCells)
+#print('Number of queens: ', len(queensOnBoard))
+
 
     
